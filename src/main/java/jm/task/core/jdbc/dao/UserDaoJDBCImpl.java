@@ -30,7 +30,6 @@ public class UserDaoJDBCImpl implements UserDao {
                   PRIMARY KEY (`id`))
                 """;
         try (Connection connection = Util.getConnection()) {
-
             connection.prepareStatement(query).execute();
             log.info("\u001B[32m Создана таблица Users \u001B[0m");
         } catch (SQLException e) {
