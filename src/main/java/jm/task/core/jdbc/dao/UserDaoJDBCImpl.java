@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    private static Logger log = Logger.getLogger(UserDaoJDBCImpl.class.getName());
+    private static final Logger log = Logger.getLogger(UserDaoJDBCImpl.class.getName());
 
     public UserDaoJDBCImpl() {
 
@@ -53,9 +53,10 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.setString(2, lastName);
             statement.setString(3, String.valueOf(age));
             statement.execute();
-            log.info("\u001B[32m Пользователь " + name + " успешно добавлен в таблицу \u001B[0m");
+            log.info("\u001B[32m Пользователь " + name + " успешно добавлен в таблицу Users \u001B[0m");
+            System.out.println("User с именем — " + name + " добавлен в базу данных");
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при добавлении пользователя:", e);
+            log.log(Level.SEVERE, "Ошибка при добавлении пользователя " + name, e);
         }
 
     }
