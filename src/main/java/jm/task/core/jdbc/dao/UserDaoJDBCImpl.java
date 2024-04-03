@@ -1,6 +1,5 @@
 package jm.task.core.jdbc.dao;
 
-import com.mysql.cj.x.protobuf.MysqlxNotice;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
@@ -9,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +21,14 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String query = "CREATE TABLE IF NOT EXISTS Users (\n" + "  `id` INT NOT NULL AUTO_INCREMENT,\n" + "  `name` VARCHAR(45) NOT NULL,\n" + "  `lastname` VARCHAR(45) NOT NULL,\n" + "  `age` INT NOT NULL,\n" + "  PRIMARY KEY (`id`))\n";
+        String query = """
+                CREATE TABLE IF NOT EXISTS Users (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(45) NOT NULL,
+                  `lastname` VARCHAR(45) NOT NULL,
+                  `age` INT NOT NULL,
+                  PRIMARY KEY (`id`))
+                """;
         try (Connection connection = Util.getConnection()) {
 
             connection.prepareStatement(query).execute();
