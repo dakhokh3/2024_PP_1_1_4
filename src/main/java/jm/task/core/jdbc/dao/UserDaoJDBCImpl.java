@@ -27,9 +27,9 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.getConnection()) {
 
             connection.prepareStatement(query).execute();
-            log.info("\u001B[32m Создана таблица Users \u001B[0m");
+            log.info("\u001B[32m РЎРѕР·РґР°РЅР° С‚Р°Р±Р»РёС†Р° Users \u001B[0m");
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при создании таблицы Users:", e);
+            log.log(Level.SEVERE, "РћС€РёР±РєР° РїСЂРё СЃРѕР·РґР°РЅРёРё С‚Р°Р±Р»РёС†С‹ Users:", e);
         }
 
     }
@@ -38,9 +38,9 @@ public class UserDaoJDBCImpl implements UserDao {
         String query = "DROP TABLE IF EXISTS Users";
         try (Connection connection = Util.getConnection()) {
             connection.prepareStatement(query).execute();
-            log.info("\u001B[32m Таблица Users удалена \u001B[0m");
+            log.info("\u001B[32m РўР°Р±Р»РёС†Р° Users СѓРґР°Р»РµРЅР° \u001B[0m");
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при удалении таблицы Users:", e);
+            log.log(Level.SEVERE, "РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё С‚Р°Р±Р»РёС†С‹ Users:", e);
         }
 
     }
@@ -53,9 +53,9 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.setString(2, lastName);
             statement.setString(3, String.valueOf(age));
             statement.execute();
-            log.info("\u001B[32m Пользователь " + name + " успешно добавлен в таблицу \u001B[0m");
+            log.info("\u001B[32m РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ " + name + " СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ РІ С‚Р°Р±Р»РёС†Сѓ \u001B[0m");
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при добавлении пользователя:", e);
+            log.log(Level.SEVERE, "РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:", e);
         }
 
     }
@@ -64,9 +64,9 @@ public class UserDaoJDBCImpl implements UserDao {
         String query = "DELETE FROM Users WHERE ID = " + id;
         try (Connection connection = Util.getConnection()) {
             connection.prepareStatement(query).execute();
-            log.info("\u001B[32m Пользователь с id = " + id + " успешно удалён \u001B[0m");
+            log.info("\u001B[32m РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ id = " + id + " СѓСЃРїРµС€РЅРѕ СѓРґР°Р»С‘РЅ \u001B[0m");
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при удалении пользователя:", e);
+            log.log(Level.SEVERE, "РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:", e);
         }
 
     }
@@ -74,18 +74,20 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         String query = "SELECT * FROM Users";
         List<User> userList = new ArrayList<>();
-        try (Connection connection = Util.getConnection(); ResultSet resultSet = connection.prepareStatement(query).executeQuery()) {
+        try (Connection connection = Util.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String lastName = resultSet.getString("lastname");
                 byte age = resultSet.getByte("age");
                 userList.add(new User(name, lastName, age));
             }
-            log.info("\u001B[32m Получены все пользователи из таблицы Users \u001B[0m");
+            log.info("\u001B[32m РџРѕР»СѓС‡РµРЅС‹ РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё РёР· С‚Р°Р±Р»РёС†С‹ Users \u001B[0m");
 
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при получении всех пользователей: ", e);
+            log.log(Level.SEVERE, "РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё РІСЃРµС… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№: ", e);
         }
         return userList;
     }
@@ -94,9 +96,9 @@ public class UserDaoJDBCImpl implements UserDao {
         String query = "DELETE FROM Users";
         try (Connection connection = Util.getConnection()) {
             connection.prepareStatement(query).execute();
-            log.info("\u001B[32m Таблица Users успешно очищена \u001B[0m");
+            log.info("\u001B[32m РўР°Р±Р»РёС†Р° Users СѓСЃРїРµС€РЅРѕ РѕС‡РёС‰РµРЅР° \u001B[0m");
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Ошибка при попытке удалить всех пользователей:", e);
+            log.log(Level.SEVERE, "РћС€РёР±РєР° РїСЂРё РїРѕРїС‹С‚РєРµ СѓРґР°Р»РёС‚СЊ РІСЃРµС… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№:", e);
         }
 
     }
